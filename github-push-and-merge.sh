@@ -1,10 +1,29 @@
 #!/bin/bash
 
+symlinkdir="/usr/local/bin/"
+
 # absolute path to this script
 rl=`readlink -f $0`
 
 # this script directory
 rd=`dirname $rl`
+
+if [ ! -f "$(realpath $0).conf" ]; then
+  # No config file
+  echo "" > $(realpath $0).conf
+  echo -e "\n\n\n${YEL}FIRST RUN!!!${NC}\n"
+  if [[ ! -h "${symlinkdir}/$(basename $0)" ]]; then
+    printf "    ${CYA}Create symlink in ${symlinkdir}? (Y/N)${NC} "
+    while read -N 1 -n 1 -s userchoice ; do
+      if [[ 'YyNn' == *"$userchoice"* ]]; then
+        [[ 'Yy' == *"$userchoice"* ]] && ln -s $(realpath $0) ${symlinkdir}/$(basename $0)
+        break
+      fi
+    done
+    echo -e "\n"
+  fi
+fi
+
 
 # Token from github crypted by ccencrypt
 tokenfile=${rd}/gh.secret.cpt
