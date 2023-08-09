@@ -48,8 +48,12 @@ fi
 
 
 
+#####################################################################################################################
+#
+# Check for mandatory settings before run git
+#
+#####################################################################################################################
 
-# check before run git
 user_email=`git config --global user.email`
 if [ -z "${user_email}" ]; then
     echo -e "\n${YEL}user_email is empty but mandatory for github. Use follwing command for set user_email:${NC}"
@@ -63,6 +67,9 @@ if [ -z "${user_name}" ]; then
     echo -e "\n     ${CYA}git config --global user.name \"username\"  ${NC}\n"
     exit
 fi
+
+#####################################################################################################################
+#####################################################################################################################
 
 
 
