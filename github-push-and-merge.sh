@@ -99,6 +99,11 @@ fi
 #fi
 
 
+git pull
+if [ $? -ne 0 ]; then
+    echo -e "${MAG}Conflict with remote repo!!! Exiting...{NC}"
+    exit
+fi
 
 
 
