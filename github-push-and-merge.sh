@@ -99,6 +99,11 @@ fi
 #fi
 
 
+
+#
+# The check for remote changes and their potential conflicts with local changes.
+# Remote changes without conflicts will just merged.
+#
 git pull
 if [ $? -ne 0 ]; then
     echo -e "${MAG}Conflict with remote repo!!! Exiting...{NC}"
