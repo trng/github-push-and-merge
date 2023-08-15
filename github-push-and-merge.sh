@@ -34,9 +34,8 @@ tempbranchname=rptemp${RANDOM}
 #ddd=` date +"%y%m%d%H%M%S"`
 
 # escape ansi sequences for coloring
-CYA='\033[1;36m' # Cyan
-MAG='\033[1;35m' # Magenta
 YEL='\033[1;33m' # Yellow
+CYA='\033[1;36m' # Cyan
 NC='\033[0m'     # No Color
 
 
@@ -93,11 +92,7 @@ fi
 
 
 
-git pull
-if [ $? -ne 0 ]; then
-    echo -e "\n\n\n${MAG}Conflict with remote repo!!! Exiting...\n\n\n${NC}"
-fi
-
+#git fetch
 # git rev-list HEAD...origin/main --count
 #if ! git diff --quiet remotes/origin/HEAD  ; then
 #  echo -e "\n${CYA}There are newer files in the remote repo.\nPlease do a ${YEL}git pull${CYA} before commiting.${NC}\n"
@@ -107,21 +102,20 @@ fi
 
 
 
-exit
 
-
-
-git switch -C ${tempbranchname} origin/main
+# git switch -C ${tempbranchname} origin/main
 git add -A
 git diff --cached --exit-code > /dev/null
 if [[ $? -eq 0 ]] ; then
   echo -e "\nNothing to commit. Exiting...\n"
-  git switch main
-  git branch --delete ${tempbranchname}
+  #git switch main
+  #git branch --delete ${tempbranchname}
   exit 1
 fi
 
 git commit
-gh pr create -f
-gh pr merge
+git push
+
+#gh pr create -f
+#gh pr merge
 
