@@ -1,4 +1,4 @@
-Step-by-step wrapper for git/github push and merge.
+Step-by-step wrapper for git/github (gh cli tool) push and merge.
 
 Pure bash.
 
