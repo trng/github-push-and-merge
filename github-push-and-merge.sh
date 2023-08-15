@@ -92,7 +92,7 @@ fi
 
 
 
-#git fetch
+# git fetch
 # git rev-list HEAD...origin/main --count
 #if ! git diff --quiet remotes/origin/HEAD  ; then
 #  echo -e "\n${CYA}There are newer files in the remote repo.\nPlease do a ${YEL}git pull${CYA} before commiting.${NC}\n"
@@ -104,8 +104,6 @@ if [ $? -ne 0 ]; then
     echo -e "${MAG}Conflict with remote repo!!! Exiting...{NC}"
     exit
 fi
-
-
 
 
 # git switch -C ${tempbranchname} origin/main
