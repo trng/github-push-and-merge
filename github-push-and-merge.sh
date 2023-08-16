@@ -1,6 +1,26 @@
 #!/bin/bash
 
+
+################################################################################
+#
+#  Constants
+#
+################################################################################
+
+
+# escape ansi sequences for coloring
+CYA='\033[1;36m' # Cyan
+MAG='\033[1;35m' # Magenta
+YEL='\033[1;33m' # Yellow
+NC='\033[0m'     # No Color
+
+
 symlinkdir="/usr/local/bin/"
+
+
+################################################################################
+################################################################################
+
 
 # absolute path to this script
 rl=`readlink -f $0`
@@ -8,6 +28,9 @@ rl=`readlink -f $0`
 # this script directory
 rd=`dirname $rl`
 
+
+
+# First run?
 if [ ! -f "$(realpath $0).conf" ]; then
   # No config file
   echo "" > $(realpath $0).conf
@@ -24,35 +47,38 @@ if [ ! -f "$(realpath $0).conf" ]; then
   fi
 fi
 
-# Check is tihs a "gitted" folder
-# .git/ subfolder exist?
+
+# Check is current folder "gitted" (.git subfolder exist?)
 if [ ! -d "$(pwd)/.git" ]; then
   # No .git folder
   echo "No .git subfolder within the current dir. Exiting..."
   exit 1
 fi
 
+for option_needed in remote.origin.url remote.origin.fetch branch.main.merge branch.main.remote ; do
+  git config --get ${option_needed} > /dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo -e "${MAG}No ${option_needed} in .git/config${NC}"
+    badconfig="true"
+  fi
+done
 
-# Get name of this repo
-remote_origin_url=`git config --get remote.origin.url`
-if [ -z ${remote_origin_url} ]; then
-  echo "No remote origin url. Exiting..."
-  exit 1
-fi
+
+[ -z ${badconfig} ] || { echo "        Exiting..." ; exit 1; }
+
+exit
 
 
 reponame=`basename -s .git ${remote_origin_url}`
 
-if [ -z ${reponame} ]; then
-  echo "No remote repo name. Exiting..."
-  exit 1
-fi
+#if [ -z ${reponame} ]; then
+#  echo "No remote repo name. Exiting..."
+#  exit 1
+#fi
 
 echo -e "Remote origin url : ${remote_origin_url}"
 echo -e "Repo name         : ${reponame}"
 
-
-exit
 
 
 # Token from github crypted by ccencrypt
@@ -63,11 +89,6 @@ tempbranchname=rptemp${RANDOM}
 
 #ddd=` date +"%y%m%d%H%M%S"`
 
-# escape ansi sequences for coloring
-CYA='\033[1;36m' # Cyan
-MAG='\033[1;35m' # Magenta
-YEL='\033[1;33m' # Yellow
-NC='\033[0m'     # No Color
 
 
 
