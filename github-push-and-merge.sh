@@ -24,6 +24,29 @@ if [ ! -f "$(realpath $0).conf" ]; then
   fi
 fi
 
+# Check is tihs a "gitted" folder
+# .git/ subfolder exist?
+if [ ! -d "$(pwd)/.git" ]; then
+  # No .git folder
+  echo "No .git subfolder within the current dir. Exiting..."
+  exit -1
+fi
+
+
+# Get name of this repo
+remote_origin_url=`git config --get remote.origin.url`
+reponame=`basename -s .git ${remote_origin_url}`
+
+if [ -z ${reponame} ]; then
+  echo "No remote repo name. Exiting..."
+  exit -1
+fi
+
+echo "Repo name: $reponame"
+
+
+
+
 
 # Token from github crypted by ccencrypt
 tokenfile=${rd}/gh.secret.cpt
