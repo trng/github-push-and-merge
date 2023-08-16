@@ -111,19 +111,19 @@ if [ $? -ne 0 ]; then
 fi
 
 
- git switch -C ${tempbranchname} origin/main
+# git switch -C ${tempbranchname} origin/main
 git add -A
 git diff --cached --exit-code > /dev/null
 if [[ $? -eq 0 ]] ; then
   echo -e "\nNothing to commit. Exiting...\n"
-  git switch main
-  git branch --delete ${tempbranchname}
+  # git switch main
+  # git branch --delete ${tempbranchname}
   exit 1
 fi
 
 git commit
-#git push
+git push
 
-gh pr create -f
-gh pr merge
+#gh pr create -f
+#gh pr merge
 
