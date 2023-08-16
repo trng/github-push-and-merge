@@ -29,23 +29,30 @@ fi
 if [ ! -d "$(pwd)/.git" ]; then
   # No .git folder
   echo "No .git subfolder within the current dir. Exiting..."
-  exit -1
+  exit 1
 fi
 
 
 # Get name of this repo
 remote_origin_url=`git config --get remote.origin.url`
+if [ -z ${remote_origin_url} ]; then
+  echo "No remote origin url. Exiting..."
+  exit 1
+fi
+
+
 reponame=`basename -s .git ${remote_origin_url}`
 
 if [ -z ${reponame} ]; then
   echo "No remote repo name. Exiting..."
-  exit -1
+  exit 1
 fi
 
-echo "Repo name: $reponame"
+echo -e "Remote origin url : ${remote_origin_url}"
+echo -e "Repo name         : ${reponame}"
 
 
-
+exit
 
 
 # Token from github crypted by ccencrypt
@@ -57,8 +64,9 @@ tempbranchname=rptemp${RANDOM}
 #ddd=` date +"%y%m%d%H%M%S"`
 
 # escape ansi sequences for coloring
-YEL='\033[1;33m' # Yellow
 CYA='\033[1;36m' # Cyan
+MAG='\033[1;35m' # Magenta
+YEL='\033[1;33m' # Yellow
 NC='\033[0m'     # No Color
 
 
@@ -129,7 +137,7 @@ fi
 #
 git pull
 if [ $? -ne 0 ]; then
-    echo -e "${MAG}Conflict with remote repo!!! Exiting...{NC}"
+    echo -e "${MAG}Conflict with remote repo!!! Exiting...${NC}"
     exit
 fi
 
