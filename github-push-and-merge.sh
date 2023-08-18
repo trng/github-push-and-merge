@@ -192,14 +192,16 @@ repo_url_for_git_push=${remote_origin_url/\:\/\//\:\/\/${TOKEN_DECRYPTED}\@}.git
 # The check for remote changes and their potential conflicts with local changes.
 # Remote changes without conflicts will just merged.
 #
+echo -e "\n${CYA}Check for remote changes...${NC}"
 git pull
 if [ $? -ne 0 ]; then
     echo -e "${MAG}Conflict with remote repo!!! Exiting...${NC}"
     exit
 fi
-
+echo "Ok"
 
 # git switch -C ${tempbranchname} origin/main
+echo -e "\n${CYA}Adding all to new commit...${NC}"
 git add -A
 git diff --cached --exit-code > /dev/null
 if [[ $? -eq 0 ]] ; then
@@ -208,12 +210,15 @@ if [[ $? -eq 0 ]] ; then
   # git branch --delete ${tempbranchname}
   exit 1
 fi
+echo "Ok"
 
+echo -e "\n${CYA}Adding all to new commit...${NC}"
 git commit
+echo "Ok"
 
-
+echo -e "\n${CYA}Push directly to the master branch...${NC}"
 git push ${repo_url_for_git_push}
-
+echo -e "Ok\n\n"
 #gh pr create -f
 #gh pr merge
 
