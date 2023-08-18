@@ -26,6 +26,41 @@ SYMLINK_DIR="/usr/local/bin/"
 ENCRYPTED_TOKEN_OPTION_NAME="remote.origin.encryptedtoken"
 
 
+
+#
+# First run?
+#
+if [ ! -f "$(realpath $0).conf" ]; then
+  # No config file
+  echo "" > $(realpath $0).conf
+  echo -e "\n\n\n${YEL}FIRST RUN!!!${NC}"
+  echo "    Config file created"
+  if [[ ! -h "${SYMLINK_DIR}/$(basename $0)" ]]; then
+    printf "    ${CYA}Create symlink in ${SYMLINK_DIR}? (Y/N)${NC} "
+    while read -N 1 -n 1 -s userchoice ; do
+      if [[ 'YyNn' == *"$userchoice"* ]]; then
+        if [[ 'Yy' == *"$userchoice"* ]] ; then
+          ln -s $(realpath $0) ${SYMLINK_DIR}/$(basename $0)
+          echo -e "\n    Symlink created in ${SYMLINK_DIR}\n\n\n"
+        else
+          echo -e "\n    Symlink not created\n\n\n"
+        fi
+        break
+      fi
+    done
+    echo -e "\n"
+  else
+    echo -e "    Symlink exists in ${SYMLINK_DIR}\n\n\n"
+  fi
+fi
+
+
+#
+# Begin check for prerequirements and mandatory parameters
+#
+echo -e "\n${CYA}Check for prerequirements and mandatory parameters...${NC}"
+
+
 #
 # Prerequirements
 #
@@ -66,34 +101,6 @@ done
 
 
 #
-# First run?
-#
-if [ ! -f "$(realpath $0).conf" ]; then
-  # No config file
-  echo "" > $(realpath $0).conf
-  echo -e "\n\n\n${YEL}FIRST RUN!!!${NC}"
-  echo "    Config file created"
-  if [[ ! -h "${SYMLINK_DIR}/$(basename $0)" ]]; then
-    printf "    ${CYA}Create symlink in ${SYMLINK_DIR}? (Y/N)${NC} "
-    while read -N 1 -n 1 -s userchoice ; do
-      if [[ 'YyNn' == *"$userchoice"* ]]; then
-        if [[ 'Yy' == *"$userchoice"* ]] ; then
-          ln -s $(realpath $0) ${SYMLINK_DIR}/$(basename $0)
-          echo -e "\n    Symlink created in ${SYMLINK_DIR}\n\n\n"
-        else
-          echo -e "\n    Symlink not created\n\n\n"
-        fi
-        break
-      fi
-    done
-    echo -e "\n"
-  else
-    echo -e "    Symlink exists in ${SYMLINK_DIR}\n\n\n"
-  fi
-fi
-
-
-#
 # Check is current folder "gitted" (.git subfolder exist?)
 #
 if [ ! -d "$(pwd)/.git" ]; then
@@ -128,9 +135,15 @@ done
 
 
 #
+# All prerequirements and mandatory parameters checked
+#
+echo -e "${CYA}Ok${NC}"
+
+
+#
 # Check for GitHub's fine-grained personal access token
 #
-echo -e "${CYA}Get GitHub's fine-grained personal access token${NC}"
+echo -e "\n${CYA}Get GitHub's fine-grained personal access token${NC}"
 TOKEN_FROM_CONFIG_ENCRYPTED=`git config --get ${ENCRYPTED_TOKEN_OPTION_NAME}`
 if [[ $? -ne 0 ]] ; then
     echo -e "GitHub's ${YEL}fine-grained personal access token${NC} is absent in .git/config"
@@ -205,7 +218,7 @@ fi
 echo -e "${CYA}Ok${NC}"
 
 # git switch -C ${tempbranchname} origin/main
-echo -e "\n${CYA}Adding all to new commit...${NC}"
+echo -e "\n${CYA}Adding all to the new commit...${NC}"
 git add -A
 git diff --cached --exit-code > /dev/null
 if [[ $? -eq 0 ]] ; then
