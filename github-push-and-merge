@@ -12,10 +12,26 @@ printf "###################################################\n"
 printf "#                                                 #\n"
 printf "#  ${CYA}GitHub push and merge v.%-16s${NC}       #\n" ${SCRIPT_VERSION}
 printf "#                                                 #\n"
+printf "#  For help:                                      #\n"
+printf "#  github-push-and-merge -h                       #\n"
+printf "#                                                 #\n"
 printf "###################################################\n"
 echo ""
 
 
+#
+# Show help?
+#
+if [[ $# -ne 0 ]] ; then
+  if [ $1 = "-h" ] ; then
+    echo "   Step-by-step wrapper for git/github push and merge via command line."
+    echo "   Pure bash."
+    echo "   External tools used:"
+    echo "       - openssl."
+    echo ""
+    exit
+  fi
+fi
 
 
 # Folder for symlink
@@ -24,6 +40,7 @@ SYMLINK_DIR="/usr/local/bin/"
 
 # Encrypted token option name (for .git/config file)
 ENCRYPTED_TOKEN_OPTION_NAME="remote.origin.encryptedtoken"
+
 
 
 
@@ -55,6 +72,7 @@ if [ ! -f "$(realpath $0).conf" ]; then
 fi
 
 
+
 #
 # Begin check for prerequirements and mandatory parameters
 #
@@ -65,7 +83,7 @@ echo -e "\n${CYA}Check for prerequirements and mandatory parameters...${NC}"
 # Prerequirements
 #
 for cmd_needed in openssl git ; do
-  command -v ${cmd_needed} >/dev/null 2>&1 || { echo -e >&2 "${MAG}${cmd_needed}${NC} not found."; external_tool_missing="true"; }
+  command -v ${cmd_needed} >/dev/null 2>&1 || { echo -e >&2 "\n${MAG}${cmd_needed}${NC} not found."; external_tool_missing="true"; }
 done
 [ -z ${external_tool_missing} ] || { echo -e "\nCannot continue without mandatory external tools. Exiting...\n" ; exit 1; }
 
@@ -75,7 +93,7 @@ done
 #
 if [ ! -d "$(pwd)/.git" ]; then
   # No .git folder
-  echo "No .git subfolder within the current dir. Exiting..."
+  echo -e "\n${MAG}No .git subfolder within the current dir. Exiting...${NC}\n"
   exit 1
 fi
 
@@ -130,6 +148,7 @@ if [[ $? -ne 0 ]] ; then
     [[ $? -ne 0 ]] && { echo -e "${MAG}Something wrong with password entered (blank or do not match). Exiting...${NC}" ; exit 1; }
 
     git config ${ENCRYPTED_TOKEN_OPTION_NAME} "${TOKEN_PASTED_ENCRYPTED}"
+    TOKEN_FROM_CONFIG_ENCRYPTED=`git config --get ${ENCRYPTED_TOKEN_OPTION_NAME}`
 fi
 
 TOKEN_DECRYPTED=$(echo "${TOKEN_FROM_CONFIG_ENCRYPTED}" | openssl base64 -d | openssl enc -d -aes-256-cbc -pbkdf2)
@@ -174,7 +193,6 @@ repo_url_for_git_push=${remote_origin_url/\:\/\//\:\/\/${TOKEN_DECRYPTED}\@}.git
 #fi
 
 
-
 #
 # The check for remote changes and their potential conflicts with local changes.
 # Remote changes without conflicts will just merged.
@@ -187,8 +205,9 @@ if [ $? -ne 0 ]; then
 fi
 echo -e "${CYA}Ok${NC}"
 
-# git switch -C ${tempbranchname} origin/main
+
 echo -e "\n${CYA}Adding all to the new commit...${NC}"
+# git switch -C ${tempbranchname} origin/main
 git add -A
 git diff --cached --exit-code > /dev/null
 if [[ $? -eq 0 ]] ; then
@@ -199,9 +218,11 @@ if [[ $? -eq 0 ]] ; then
 fi
 echo -e "${CYA}Ok${NC}"
 
+
 echo -e "\n${CYA}Commit...${NC}"
 git commit
 echo -e "${CYA}Ok${NC}"
+
 
 echo -e "\n${CYA}Push directly to the master branch...${NC}"
 git push ${repo_url_for_git_push}
