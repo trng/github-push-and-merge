@@ -1,7 +1,7 @@
-Step-by-step wrapper for git/github (gh cli tool) push and merge.
+Step-by-step wrapper for git/github push and merge via command line.
 
 Pure bash.
 
 External tools used:
-- ccrypt utility (ccencrypt/ccdecrypt).
+- openssl.
 
