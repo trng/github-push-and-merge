@@ -130,6 +130,7 @@ done
 #
 # Check for GitHub's fine-grained personal access token
 #
+echo -e "${CYA}Get GitHub's fine-grained personal access token${NC}"
 TOKEN_FROM_CONFIG_ENCRYPTED=`git config --get ${ENCRYPTED_TOKEN_OPTION_NAME}`
 if [[ $? -ne 0 ]] ; then
     echo -e "GitHub's ${YEL}fine-grained personal access token${NC} is absent in .git/config"
@@ -149,12 +150,15 @@ if [[ $? -ne 0 ]] ; then
 fi
 
 TOKEN_DECRYPTED=$(echo "${TOKEN_FROM_CONFIG_ENCRYPTED}" | openssl base64 -d | openssl enc -d -aes-256-cbc -pbkdf2)
+echo -e "${CYA}Ok${NC}"
 
+
+
+
+#
+# Get remote origin url and inject decrypted token to it
+#
 remote_origin_url=`git config --get remote.origin.url`
-#remote_proto=`echo ${remote_origin_url} | awk -F// '{print $1}'`
-#remote_host=`echo ${remote_origin_url} | awk -F// '{print $NF}'`
-
-
 repo_url_for_git_push=${remote_origin_url/\:\/\//\:\/\/${TOKEN_DECRYPTED}\@}.git
 
 
@@ -198,7 +202,7 @@ if [ $? -ne 0 ]; then
     echo -e "${MAG}Conflict with remote repo!!! Exiting...${NC}"
     exit
 fi
-echo "Ok"
+echo -e "${CYA}Ok${NC}"
 
 # git switch -C ${tempbranchname} origin/main
 echo -e "\n${CYA}Adding all to new commit...${NC}"
@@ -210,15 +214,15 @@ if [[ $? -eq 0 ]] ; then
   # git branch --delete ${tempbranchname}
   exit 1
 fi
-echo "Ok"
+echo -e "${CYA}Ok${NC}"
 
-echo -e "\n${CYA}Adding all to new commit...${NC}"
+echo -e "\n${CYA}Commit...${NC}"
 git commit
-echo "Ok"
+echo -e "${CYA}Ok${NC}"
 
 echo -e "\n${CYA}Push directly to the master branch...${NC}"
 git push ${repo_url_for_git_push}
-echo -e "Ok\n\n"
+echo -e "${CYA}Ok${NC}\n\n"
 #gh pr create -f
 #gh pr merge
 
