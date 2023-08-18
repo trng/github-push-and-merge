@@ -10,7 +10,7 @@ NC='\033[0m'     # No Color
 echo ""
 printf "###################################################\n"
 printf "#                                                 #\n"
-printf "#  ${CYA}GitHub push and merge v.%-12s${NC}           #\n" ${SCRIPT_VERSION}
+printf "#  ${CYA}GitHub push and merge v.%-16s${NC}       #\n" ${SCRIPT_VERSION}
 printf "#                                                 #\n"
 printf "###################################################\n"
 echo ""
@@ -64,40 +64,10 @@ echo -e "\n${CYA}Check for prerequirements and mandatory parameters...${NC}"
 #
 # Prerequirements
 #
-for cmdneeded in openssl git ; do
-  command -v ${cmdneeded} >/dev/null 2>&1 || { echo -e >&2 "${MAG}${cmdneeded}${NC} not found."; external_tool_missing="true"; }
+for cmd_needed in openssl git ; do
+  command -v ${cmd_needed} >/dev/null 2>&1 || { echo -e >&2 "${MAG}${cmd_needed}${NC} not found."; external_tool_missing="true"; }
 done
 [ -z ${external_tool_missing} ] || { echo -e "\nCannot continue without mandatory external tools. Exiting...\n" ; exit 1; }
-
-
-
-
-################################################################################
-#
-#  Variables
-#
-################################################################################
-
-
-# absolute path to this script
-#RL=`readlink -f $0`
-#FULL_PATH_WITHOUT_EXTENTION=${RL%.*}
-
-# this script directory
-#RD=`dirname $RL`
-
-#REPO_NAME=$(basename ${RL})
-#REPO_NAME=${REPO_NAME%.*}
-
-
-# Temporary branch name
-#tempbranchname=${REPO_NAME}${RANDOM}
-
-
-################################################################################
-################################################################################
-
-
 
 
 #
@@ -141,7 +111,7 @@ echo -e "${CYA}Ok${NC}"
 
 
 #
-# Check for GitHub's fine-grained personal access token
+# Check and get for GitHub's fine-grained personal access token
 #
 echo -e "\n${CYA}Get GitHub's fine-grained personal access token${NC}"
 TOKEN_FROM_CONFIG_ENCRYPTED=`git config --get ${ENCRYPTED_TOKEN_OPTION_NAME}`
