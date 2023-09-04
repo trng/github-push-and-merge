@@ -131,9 +131,9 @@ echo -e "${CYA}Ok${NC}"
 #
 # Check and get for GitHub's fine-grained personal access token
 #
-echo -e "\n${CYA}Get GitHub's fine-grained personal access token${NC}"
 TOKEN_FROM_CONFIG_ENCRYPTED=`git config --get ${ENCRYPTED_TOKEN_OPTION_NAME}`
 if [[ $? -ne 0 ]] ; then
+    echo -e "\n${CYA}No fine-grained personal access token${NC}"
     echo -e "GitHub's ${YEL}fine-grained personal access token${NC} is absent in .git/config"
     echo -e "Paste it here (or press Ctrl-C to stop script):"
 
@@ -149,8 +149,10 @@ if [[ $? -ne 0 ]] ; then
 
     git config ${ENCRYPTED_TOKEN_OPTION_NAME} "${TOKEN_PASTED_ENCRYPTED}"
     TOKEN_FROM_CONFIG_ENCRYPTED=`git config --get ${ENCRYPTED_TOKEN_OPTION_NAME}`
+    echo -e "${CYA}Ok${NC}"
 fi
 
+echo -e "\n${CYA}Decrypt GitHub's fine-grained personal access token${NC}"
 TOKEN_DECRYPTED=$(echo "${TOKEN_FROM_CONFIG_ENCRYPTED}" | openssl base64 -d | openssl enc -d -aes-256-cbc -pbkdf2)
 echo -e "${CYA}Ok${NC}"
 
