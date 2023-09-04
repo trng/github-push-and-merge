@@ -161,7 +161,7 @@ echo -e "${CYA}Ok${NC}"
 # Get remote origin url and inject decrypted token to it
 #
 remote_origin_url=`git config --get remote.origin.url`
-repo_url_for_git_push=${remote_origin_url/\:\/\//\:\/\/${TOKEN_DECRYPTED}\@}.git
+repo_url_for_git_push=${remote_origin_url/\:\/\//\:\/\/${TOKEN_DECRYPTED}\@}
 
 
 
@@ -198,7 +198,7 @@ repo_url_for_git_push=${remote_origin_url/\:\/\//\:\/\/${TOKEN_DECRYPTED}\@}.git
 # Remote changes without conflicts will just merged.
 #
 echo -e "\n${CYA}Check for remote changes...${NC}"
-git pull
+git pull ${repo_url_for_git_push}
 if [ $? -ne 0 ]; then
     echo -e "${MAG}Conflict with remote repo!!! Exiting...${NC}"
     exit
