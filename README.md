@@ -22,4 +22,4 @@ It will be encrypted and never stored unencrypted (neither in environment variab
 ## Usage
 Just clone and run within your local git repo folder.
 
-With first run script will try to create softlink in */usr/local/bin* folder.
+With first run script will try to create softlink to itself in */usr/local/bin* folder.
