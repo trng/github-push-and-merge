@@ -57,7 +57,7 @@ if [ ! -f "$(realpath $0).conf" ]; then
     while read -N 1 -n 1 -s userchoice ; do
       if [[ 'YyNn' == *"$userchoice"* ]]; then
         if [[ 'Yy' == *"$userchoice"* ]] ; then
-          ln -s $(realpath $0) ${SYMLINK_DIR}/$(basename $0)
+          sudo ln -s $(realpath $0) ${SYMLINK_DIR}/$(basename $0)
           echo -e "\n    Symlink created in ${SYMLINK_DIR}\n\n\n"
         else
           echo -e "\n    Symlink not created\n\n\n"
