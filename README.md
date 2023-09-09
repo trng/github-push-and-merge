@@ -5,8 +5,6 @@ Pure bash.
 
 Inspired with github auth system via tokens (and prohibited login/password auth for command line git).
 
-By default *git add* use -A option (all new/changed files is added to commit).
-
 <br>
 
 ## Adapted for easy use GitHub's fine-grained personal access token
@@ -25,3 +23,9 @@ It will be encrypted and never stored unencrypted (neither in environment variab
 Just clone and run within your local git repo folder.
 
 With first run script will try to create softlink to itself in */usr/local/bin* folder.
+
+<br>
+
+## Defaults 
+- *git add* uses -A option (all new/changed files is added to commit).
+- *git pull* pushes current branch without merging it to main branch.
