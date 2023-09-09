@@ -3,6 +3,8 @@
 
 Pure bash.
 
+Inspired with github auth system via tokens (and prohibited login/password auth for command line git).
+
 By default *git add* use -A option (all new/changed files is added to commit).
 
 <br>
