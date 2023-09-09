@@ -188,6 +188,7 @@ repo_url_for_git_push=${remote_origin_url/\:\/\//\:\/\/${TOKEN_DECRYPTED}\@}
 
 
 
+# TODO: check for conflicts with origin before commit
 # git fetch
 # git rev-list HEAD...origin/main --count
 #if ! git diff --quiet remotes/origin/HEAD  ; then
