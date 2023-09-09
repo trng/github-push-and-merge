@@ -27,5 +27,6 @@ With first run script will try to create softlink to itself in */usr/local/bin* 
 <br>
 
 ## Defaults 
+- *git pull* used before each commit/push.
 - *git add* uses -A option (all new/changed files is added to commit).
-- *git pull* pushes current branch without merging it to main branch.
+- *git push* pushes current branch without merging it to main branch.
