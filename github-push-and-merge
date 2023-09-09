@@ -24,11 +24,19 @@ echo ""
 #
 if [[ $# -ne 0 ]] ; then
   if [ $1 = "-h" ] ; then
+    echo " "
+    echo "SHORT HELP"
     echo "   Step-by-step wrapper for git/github push and merge via command line."
     echo "   Pure bash."
     echo "   External tools used:"
     echo "       - openssl."
-    echo ""
+    echo " "
+    echo "   Usage:"
+    echo "   Run within your local git repo folder without parameters."
+    echo "   With first run you will be prompted for GitHub's fine-grained personal access token."
+    echo "   More details: https://github.com/trng/github-push-and-merge"
+    echo " "
+    echo " "
     exit
   fi
 fi
