@@ -26,6 +26,7 @@ if [[ $# -ne 0 ]] ; then
   if [ $1 = "-h" ] ; then
     echo " "
     echo "SHORT HELP"
+    echo " "
     echo "   Step-by-step wrapper for git/github push and merge via command line."
     echo "   Pure bash."
     echo "   External tools used:"
