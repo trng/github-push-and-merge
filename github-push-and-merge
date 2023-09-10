@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VERSION=0.3.3
+SCRIPT_VERSION=0.4.0
 
 # ANSI escape-sequences for coloring
 CYA='\033[1;36m' # Cyan
@@ -33,7 +33,7 @@ if [[ $# -ne 0 ]] ; then
     echo "       - openssl."
     echo " "
     echo "   Usage:"
-    echo "   Run within your local git repo folder without parameters."
+    echo "   Run this script within your local git repo folder without parameters."
     echo "   With first run you will be prompted for GitHub's fine-grained personal access token."
     echo "   More details: https://github.com/trng/github-push-and-merge"
     echo " "
