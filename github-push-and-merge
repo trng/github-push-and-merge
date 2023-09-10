@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VERSION=0.2.7
+SCRIPT_VERSION=0.3.1
 
 # ANSI escape-sequences for coloring
 CYA='\033[1;36m' # Cyan
@@ -244,6 +244,8 @@ echo -e "${CYA}Ok${NC}"
 echo -e "\n${CYA}Push directly to the master branch...${NC}"
 git push ${repo_url_for_git_push}
 echo -e "${CYA}Finish${NC}\n\n"
-#gh pr create -f
-#gh pr merge
 
+# gh pr create -f
+# gh pr merge
+# git switch main
+# git branch --delete ${tempbranchname}
