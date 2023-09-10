@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VERSION="0.1.1"
+SCRIPT_VERSION=0.2.7
 
 # ANSI escape-sequences for coloring
 CYA='\033[1;36m' # Cyan
@@ -163,8 +163,9 @@ fi
 
 echo -e "\n${CYA}Decrypt GitHub's fine-grained personal access token${NC}"
 TOKEN_DECRYPTED=$(echo "${TOKEN_FROM_CONFIG_ENCRYPTED}" | openssl base64 -d | openssl enc -d -aes-256-cbc -pbkdf2)
-echo -e "${CYA}Ok${NC}"
+[[ $? -ne 0 ]] && { echo -e "${MAG}Something wrong with password entered (blank or incorrect). Exiting...${NC}" ; exit 1; }
 
+echo -e "${CYA}Ok${NC}"
 
 
 
@@ -213,7 +214,7 @@ echo -e "\n${CYA}Check for remote changes...${NC}"
 git pull ${repo_url_for_git_push}
 if [ $? -ne 0 ]; then
     echo -e "${MAG}Conflict with remote repo!!! Exiting...${NC}"
-    exit
+    exit 1
 fi
 echo -e "${CYA}Ok${NC}"
 
@@ -233,12 +234,16 @@ echo -e "${CYA}Ok${NC}"
 
 echo -e "\n${CYA}Commit...${NC}"
 git commit
+if [ $? -ne 0 ]; then
+    echo -e "${MAG}Something wrong with commit (maybe hooks job)!!! Exiting...${NC}"
+    exit 1
+fi
 echo -e "${CYA}Ok${NC}"
 
 
 echo -e "\n${CYA}Push directly to the master branch...${NC}"
 git push ${repo_url_for_git_push}
-echo -e "${CYA}Ok${NC}\n\n"
+echo -e "${CYA}Finish${NC}\n\n"
 #gh pr create -f
 #gh pr merge
 
