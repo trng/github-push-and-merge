@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VERSION=0.3.1
+SCRIPT_VERSION=0.3.2
 
 # ANSI escape-sequences for coloring
 CYA='\033[1;36m' # Cyan
@@ -232,7 +232,7 @@ fi
 echo -e "${CYA}Ok${NC}"
 
 
-echo -e "\n${CYA}Commit...${NC}"
+echo -e "\n${CYA}Commiting...${NC}"
 git commit
 if [ $? -ne 0 ]; then
     echo -e "${MAG}Something wrong with commit (maybe hooks job)!!! Exiting...${NC}"
