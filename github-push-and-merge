@@ -247,8 +247,10 @@ if [ $? -ne 0 ]; then
     echo -e "${MAG}Something went wrong with push!!! Exiting...${NC}"
     exit 1
 fi
+echo -e "${CYA}Ok${NC}"
 
-echo -e "${CYA}Finish${NC}\n\n"
+
+echo -e "\n\n\n${CYA}Finish${NC}\n\n"
 
 
 
