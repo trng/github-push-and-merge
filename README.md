@@ -22,7 +22,7 @@ It will be encrypted and never stored unencrypted (neither in environment variab
 <br>
 
 ## Usage
-Just clone and run within your local git repo folder.
+Just clone and run within your local git repo folder. Each step is guided and controlled by exit codes.
 
 With first run you will be prompted to create softlink to this script in */usr/local/bin* folder (requires sudo rights).
 
