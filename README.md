@@ -1,6 +1,8 @@
 
 # Step-by-step wrapper for git/github push and merge via command line
 
+Useful for script development directly on target host (e.g. servers without GUI).
+
 Pure bash.
 
 Inspired with github auth system via tokens (and prohibited login/password auth for command line git).
@@ -22,7 +24,7 @@ It will be encrypted and never stored unencrypted (neither in environment variab
 ## Usage
 Just clone and run within your local git repo folder.
 
-With first run script will try to create softlink to itself in */usr/local/bin* folder.
+With first run you will be prompted to create softlink to this script in */usr/local/bin* folder (requires sudo rights).
 
 <br>
 
