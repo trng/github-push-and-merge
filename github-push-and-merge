@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VERSION=0.4.2
+SCRIPT_VERSION=0.4.3
 
 # ANSI escape-sequences for coloring
 CYA='\033[1;36m' # Cyan
@@ -258,3 +258,4 @@ echo -e "\n\n\n${CYA}Finish${NC}\n\n"
 # gh pr merge
 # git switch main
 # git branch --delete ${tempbranchname}
+
