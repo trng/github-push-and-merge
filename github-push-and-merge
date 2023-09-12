@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VERSION=0.4.10
+SCRIPT_VERSION=0.4.11
 
 
 # Folder for symlink (softlink)
@@ -224,10 +224,10 @@ echo -e "\n${CYA}Adding all to the new commit...${NC}"
 git add -A
 git diff --cached --exit-code > /dev/null
 if [[ $? -eq 0 ]] ; then
-  echo -e "\nNothing to commit. Exiting...\n"
-  # git switch main
-  # git branch --delete ${tempbranchname}
-  exit 1
+    echo -e "\nNothing to commit. Exiting...\n"
+    # git switch main
+    # git branch --delete ${tempbranchname}
+    exit 1
 fi
 echo -e "${CYA}Ok${NC}"
 
