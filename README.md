@@ -11,7 +11,7 @@ Inspired with github auth system via tokens (and prohibited login/password auth 
 
 ## Adapted for easy use GitHub's fine-grained personal access token
 GitHub's fine-grained personal access token is encrypted with AES and stored in .git/config.
-With first run you will be prompted for personal access token.
+With first run within local repo folder you will be prompted for fine-grained personal access token.
 It will be encrypted and never stored unencrypted (neither in environment variables nor in file).
 
 <br>
