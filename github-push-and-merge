@@ -1,6 +1,8 @@
 #!/bin/bash
-SCRIPT_VERSION=0.4.11
+SCRIPT_VERSION=0.4.12
 
+# Config file name
+CONFIG_FILE_NAME="github-push-and-merge.conf"
 
 # Folder for symlink (softlink)
 SYMLINK_DIR="/usr/local/bin/"
@@ -56,9 +58,9 @@ fi
 #
 # First run?
 #
-if [ ! -f "$(realpath $0).conf" ]; then
+if [ ! -f "$CONFIG_FILE_NAME" ]; then
   # No config file
-  echo "" > $(realpath $0).conf
+  echo "" > $CONFIG_FILE_NAME
   echo -e "\n\n\n${YEL}FIRST RUN!!!${NC}"
   echo "    Config file created"
   if [[ ! -h "${SYMLINK_DIR}/$(basename $0)" ]]; then
