@@ -61,7 +61,7 @@ fi
 if [ ! -f "$CONFIG_FILE_NAME" ]; then
   # No config file
   echo "" > $CONFIG_FILE_NAME
-  printf "%s\n%s" "# Ignore local config" "${CONFIG_FILE_NAME##*/}" > /root/github-push-and-merge/.gitignore
+  # printf "%s\n%s" "# Ignore local config" "${CONFIG_FILE_NAME##*/}" > /root/github-push-and-merge/.gitignore
   echo -e "\n\n\n${YEL}FIRST RUN!!!${NC}"
   echo "    Config file created"
   if [[ ! -h "${SYMLINK_DIR}/$(basename $0)" ]]; then
