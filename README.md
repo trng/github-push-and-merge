@@ -26,6 +26,7 @@ Create new repo on github.com.
 
 
 Just clone and run github-push-and-merge. For system-wide runniing you will be prompted (with first run) to create softlink to this script in */usr/local/bin* folder (requires sudo rights).
+
 Then you can run github-push-and-merge within your local git repo folder(s). Every step is guided and controlled by exit codes.
 
 
